@@ -1,0 +1,39 @@
+name: Extract AgriCulture ZIP
+
+on: push
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}  # Use the token
+
+      - name: Verify AgriCulture.zip exists
+        run: |
+          ls -l /AgriCulture/  # List contents to verify location
+          if [ ! -f "/AgriCulture/AgriCulture.zip" ]; then
+            echo "AgriCulture.zip not found!";
+            exit 1;
+          fi
+
+      - name: Extract ZIP File to AgriCulture-extracted folder
+        run: unzip /AgriCulture/AgriCulture.zip -d AgriCulture-extracted  # Extract to AgriCulture-extracted folder
+
+      - name: Move extracted files to root
+        run: |
+          mv AgriCulture-extracted/* .  # Move all files from the folder to the root
+          rmdir AgriCulture-extracted  # Remove the empty folder
+
+      - name: Remove ZIP File (Optional)
+        run: rm /AgriCulture/AgriCulture.zip  # Clean up
+
+      - name: Commit extracted files
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add .
+          git commit -m "Extracted AgriCulture.zip to root"
+          git push origin main
