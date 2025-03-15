@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}  # Use the token
 
       - name: Extract ZIP File
         run: unzip AgriCulture.zip -d AgriCulture-extracted
@@ -18,4 +20,4 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add AgriCulture-extracted
           git commit -m "Extracted AgriCulture.zip"
-          git push
+          git push origin main
