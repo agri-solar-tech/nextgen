@@ -11,11 +11,19 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}  # Use the token
 
+      - name: Verify AgriCulture.zip exists
+        run: |
+          ls -l /AgriCulture/  # List contents to verify location
+          if [ ! -f "/AgriCulture/AgriCulture.zip" ]; then
+            echo "AgriCulture.zip not found!";
+            exit 1;
+          fi
+
       - name: Extract ZIP File to Root
-        run: unzip AgriCulture.zip -d .  # Extract to the root
+        run: unzip /AgriCulture/AgriCulture.zip -d .  # Extract to root
 
       - name: Remove ZIP File (Optional)
-        run: rm AgriCulture.zip  # Remove ZIP to keep repo clean
+        run: rm /AgriCulture/AgriCulture.zip  # Clean up
 
       - name: Commit extracted files
         run: |
