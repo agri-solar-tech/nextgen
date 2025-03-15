@@ -11,29 +11,24 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}  # Use the token
 
-      - name: Verify AgriCulture.zip exists
+      - name: Verify AgriCulture-extracted/AgriCulture exists
         run: |
-          ls -l /AgriCulture/  # List contents to verify location
-          if [ ! -f "/AgriCulture/AgriCulture.zip" ]; then
-            echo "AgriCulture.zip not found!";
+          ls -l AgriCulture-extracted/AgriCulture  # List contents to verify location
+          if [ ! -d "AgriCulture-extracted/AgriCulture" ]; then
+            echo "AgriCulture-extracted/AgriCulture not found!";
             exit 1;
           fi
 
-      - name: Extract ZIP File to AgriCulture-extracted folder
-        run: unzip /AgriCulture/AgriCulture.zip -d AgriCulture-extracted  # Extract to AgriCulture-extracted folder
-
-      - name: Move extracted files to root
+      - name: Move files from AgriCulture-extracted/AgriCulture to root
         run: |
-          mv AgriCulture-extracted/* .  # Move all files from the folder to the root
-          rmdir AgriCulture-extracted  # Remove the empty folder
-
-      - name: Remove ZIP File (Optional)
-        run: rm /AgriCulture/AgriCulture.zip  # Clean up
+          mv AgriCulture-extracted/AgriCulture/* .  # Move files from AgriCulture-extracted/AgriCulture to the root
+          rmdir AgriCulture-extracted/AgriCulture  # Remove the now-empty subfolder
+          rmdir AgriCulture-extracted  # Remove the empty parent folder
 
       - name: Commit extracted files
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add .
-          git commit -m "Extracted AgriCulture.zip to root"
+          git commit -m "Moved extracted files to root"
           git push origin main
