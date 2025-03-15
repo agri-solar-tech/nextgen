@@ -11,13 +11,16 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}  # Use the token
 
-      - name: Extract ZIP File
-        run: unzip AgriCulture.zip -d AgriCulture-extracted
+      - name: Extract ZIP File to Root
+        run: unzip AgriCulture.zip -d .  # Extract to the root
+
+      - name: Remove ZIP File (Optional)
+        run: rm AgriCulture.zip  # Remove ZIP to keep repo clean
 
       - name: Commit extracted files
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add AgriCulture-extracted
-          git commit -m "Extracted AgriCulture.zip"
+          git add .
+          git commit -m "Extracted AgriCulture.zip to root"
           git push origin main
