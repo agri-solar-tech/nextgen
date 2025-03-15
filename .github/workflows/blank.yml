@@ -1,0 +1,21 @@
+name: Extract AgriCulture ZIP
+
+on: push
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Extract ZIP File
+        run: unzip AgriCulture.zip -d AgriCulture-extracted
+
+      - name: Commit extracted files
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add AgriCulture-extracted
+          git commit -m "Extracted AgriCulture.zip"
+          git push
