@@ -154,7 +154,6 @@
 
     <!-- Call To Action Section -->
 <section id="call-to-action" class="call-to-action section light-background">
-
   <div class="content">
     <div class="container">
       <div class="row align-items-center">
@@ -165,10 +164,15 @@
           </p>
         </div>
         <div class="col-lg-6">
-          <form action="forms/newsletter.php" class="form-subscribe php-email-form">
+          <form action="https://formspree.io/f/mrbpaann" method="POST" class="php-email-form">
+            <!-- Redirect after successful submission -->
+            <input type="hidden" name="_next" value="/thanks?language=en">
+            <!-- Formspree newsletter specific field -->
+            <input type="hidden" name="_subject" value="New newsletter subscription">
+            
             <div class="form-group d-flex align-items-stretch">
-              <input type="email" name="email" class="form-control h-100" placeholder="Entrez votre e-mail">
-              <input type="submit" class="btn btn-secondary px-4" value="S'abonner">
+              <input type="email" name="email" class="form-control h-100" placeholder="Entrez votre e-mail" required>
+              <button type="submit" class="btn btn-secondary px-4">S'abonner</button>
             </div>
             <div class="loading">Chargement</div>
             <div class="error-message"></div>
