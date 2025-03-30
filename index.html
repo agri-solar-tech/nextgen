@@ -27,13 +27,23 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: AgriCulture
-  * Template URL: https://bootstrapmade.com/agriculture-bootstrap-website-template/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <style>
+    /* Ensure the container allows the logo to expand */
+    .container-fluid {
+      width: 100% !important;
+      max-width: none !important;
+      padding: 0 !important;
+      display: block !important;
+    }
+
+    .custom-logo {
+      width: 300px !important; /* Set the desired width */
+      height: auto !important;  /* Maintain aspect ratio */
+      max-width: none !important;  /* Override any max-width constraints */
+      display: block !important;  /* Ensure the logo displays as a block */
+      object-fit: contain !important;  /* Preserve the aspect ratio of the logo */
+    }
+  </style>
 </head>
 
 <body class="index-page">
@@ -42,10 +52,10 @@
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-<img src="https://i.imgur.com/5fK5RoK.png" alt="AgriCulture" style="width: 10px !important; height: 100px !important;">
-        <!-- <h1 class="sitename">AgriCulture</h1>  -->
+        <!-- Use class for styling the image -->
+        <img src="https://i.imgur.com/5fK5RoK.png" alt="AgriCulture" class="custom-logo">
       </a>
+
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html" class="active">Home</a></li>
@@ -59,7 +69,7 @@
       </nav>
 
     </div>
-  </header>
+</header>
 
   <main class="main">
 
