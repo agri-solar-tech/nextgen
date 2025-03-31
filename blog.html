@@ -284,12 +284,14 @@
       body: formData,
       headers: { "Accept": "application/json" }
     })
-    .then(response => {
+    .then(response => response.json())
+    .then(data => {
       loadingMessage.style.display = "none";
-      if (response.ok) {
+      if (data.ok) {
         sentMessage.style.display = "block";
         form.reset(); // Clear the form after success
       } else {
+        // Ignore unnecessary fields like "next" and just show an error message
         errorMessage.textContent = "Une erreur s'est produite. Veuillez réessayer.";
         errorMessage.style.display = "block";
       }
@@ -301,6 +303,7 @@
     });
   });
 </script>
+
 
 
 <!-- /Call To Action Section -->
