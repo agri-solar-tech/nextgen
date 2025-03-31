@@ -257,7 +257,7 @@
             <div class="loading" style="display: none;">Loading...</div>
             <div class="error-message" style="display: none; color: red;"></div>
             <div class="sent-message" style="display: none; color: green;">
-              Your subscription request has been sent. Thank you!
+              ✅ Merci ! Vous êtes maintenant abonné à notre newsletter. 🎉
             </div>
           </form>
         </div>
@@ -284,27 +284,23 @@
       body: formData,
       headers: { "Accept": "application/json" }
     })
-    .then(response => response.json())
-    .then(data => {
+    .then(response => {
       loadingMessage.style.display = "none";
-      if (data.ok) {
+      if (response.ok) {
         sentMessage.style.display = "block";
-        setTimeout(() => {
-          window.location.href = "/thanks.html"; // Redirect manually to a static page
-        }, 2000); // Wait 2 seconds before redirecting
+        form.reset(); // Clear the form after success
       } else {
-        errorMessage.textContent = "An error occurred. Please try again.";
+        errorMessage.textContent = "Une erreur s'est produite. Veuillez réessayer.";
         errorMessage.style.display = "block";
       }
     })
     .catch(() => {
       loadingMessage.style.display = "none";
-      errorMessage.textContent = "Failed to send request.";
+      errorMessage.textContent = "Échec de l'envoi du message.";
       errorMessage.style.display = "block";
     });
   });
 </script>
-
 
 <!-- /Call To Action Section -->
 
