@@ -250,7 +250,6 @@
         </div>
         <div class="col-lg-6">
           <form action="https://formspree.io/f/mrbpaann" method="POST" class="form-subscribe php-email-form" id="newsletter-form">
-            <input type="hidden" name="_next" value="https://www.turismomarruecos.net/thanks?language=en">
             <div class="form-group d-flex align-items-stretch">
               <input type="email" name="email" class="form-control h-100" placeholder="Enter your e-mail" required>
               <input type="submit" class="btn btn-secondary px-4" value="Subscribe">
@@ -285,18 +284,17 @@
       body: formData,
       headers: { "Accept": "application/json" }
     })
-    .then(response => {
+    .then(response => response.json())
+    .then(data => {
       loadingMessage.style.display = "none";
-      if (response.ok) {
+      if (data.ok) {
         sentMessage.style.display = "block";
         setTimeout(() => {
-          window.location.href = "https://www.turismomarruecos.net/thanks?language=en"; // Redirect manually
+          window.location.href = "/thanks.html"; // Redirect manually to a static page
         }, 2000); // Wait 2 seconds before redirecting
       } else {
-        return response.json().then(data => {
-          errorMessage.textContent = data.error || "An error occurred.";
-          errorMessage.style.display = "block";
-        });
+        errorMessage.textContent = "An error occurred. Please try again.";
+        errorMessage.style.display = "block";
       }
     })
     .catch(() => {
@@ -306,6 +304,7 @@
     });
   });
 </script>
+
 
 <!-- /Call To Action Section -->
 
