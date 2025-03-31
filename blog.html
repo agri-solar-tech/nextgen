@@ -267,13 +267,14 @@
 </section>
 
 <script>
-  // Override console.error to avoid unwanted error logs
+  // Override console.error to prevent Formspree's internal "next" redirect from showing in the console
   const originalConsoleError = console.error;
   console.error = function(message, ...args) {
+    // Check if the message is related to Formspree's "next" redirect field
     if (typeof message === "string" && message.includes('next')) {
-      // Ignore the Formspree internal redirect message
-      return;
+      return; // Don't log this "error" related to the redirect
     }
+    // Otherwise, call the original console.error method
     originalConsoleError(message, ...args);
   };
 
@@ -294,24 +295,25 @@
       body: formData,
       headers: { "Accept": "application/json" }
     })
-    .then(response => response.json())
+    .then(response => response.json()) // Parse the JSON response from Formspree
     .then(data => {
       loadingMessage.style.display = "none";
       if (data.ok) {
-        sentMessage.style.display = "block";
-        form.reset(); // Clear the form after success
+        sentMessage.style.display = "block"; // Display the success message
+        form.reset(); // Clear the form after submission
       } else {
         errorMessage.textContent = "Une erreur s'est produite. Veuillez réessayer.";
-        errorMessage.style.display = "block";
+        errorMessage.style.display = "block"; // Display error message if form submission fails
       }
     })
     .catch(() => {
       loadingMessage.style.display = "none";
       errorMessage.textContent = "Échec de l'envoi du message.";
-      errorMessage.style.display = "block";
+      errorMessage.style.display = "block"; // Display error message if something goes wrong
     });
   });
 </script>
+
 
 
 
