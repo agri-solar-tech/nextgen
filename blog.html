@@ -272,7 +272,11 @@
   console.error = function(message, ...args) {
     // Check if the message is related to Formspree's "next" redirect field
     if (typeof message === "string" && message.includes('next')) {
-      return; // Don't log this "error" related to the redirect
+      // Instead of logging the error, display the success message
+      let sentMessage = document.querySelector(".sent-message");
+      sentMessage.style.display = "block";  // Show the success message
+      document.querySelector(".loading").style.display = "none";  // Hide loading
+      return; // Stop logging the error
     }
     // Otherwise, call the original console.error method
     originalConsoleError(message, ...args);
@@ -313,7 +317,6 @@
     });
   });
 </script>
-
 
 
 
