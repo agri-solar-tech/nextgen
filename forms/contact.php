@@ -1,4 +1,6 @@
 <form action="https://formspree.io/f/mrbpaann" method="POST">
+    <input type="hidden" name="_next" value="https://www.turismomarruecos.net/thanks?language=en">
+    
     <label>
         Your Name:
         <input type="text" name="name" required placeholder="Your Name">
