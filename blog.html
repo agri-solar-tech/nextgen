@@ -249,15 +249,15 @@
           </p>
         </div>
         <div class="col-lg-6">
-          <form action="https://formspree.io/f/mrbpaann" method="POST" class="form-subscribe php-email-form">
+          <form action="https://formspree.io/f/mrbpaann" method="POST" class="form-subscribe php-email-form" id="newsletter-form">
             <input type="hidden" name="_next" value="https://www.turismomarruecos.net/thanks?language=en">
             <div class="form-group d-flex align-items-stretch">
               <input type="email" name="email" class="form-control h-100" placeholder="Enter your e-mail" required>
               <input type="submit" class="btn btn-secondary px-4" value="Subscribe">
             </div>
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">
+            <div class="loading" style="display: none;">Loading...</div>
+            <div class="error-message" style="display: none; color: red;"></div>
+            <div class="sent-message" style="display: none; color: green;">
               Your subscription request has been sent. Thank you!
             </div>
           </form>
@@ -266,6 +266,47 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.getElementById("newsletter-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent default form submission
+    let form = this;
+    let formData = new FormData(form);
+    let loadingMessage = document.querySelector(".loading");
+    let errorMessage = document.querySelector(".error-message");
+    let sentMessage = document.querySelector(".sent-message");
+
+    loadingMessage.style.display = "block";
+    errorMessage.style.display = "none";
+    sentMessage.style.display = "none";
+
+    fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: { "Accept": "application/json" }
+    })
+    .then(response => {
+      loadingMessage.style.display = "none";
+      if (response.ok) {
+        sentMessage.style.display = "block";
+        setTimeout(() => {
+          window.location.href = "https://www.turismomarruecos.net/thanks?language=en"; // Redirect manually
+        }, 2000); // Wait 2 seconds before redirecting
+      } else {
+        return response.json().then(data => {
+          errorMessage.textContent = data.error || "An error occurred.";
+          errorMessage.style.display = "block";
+        });
+      }
+    })
+    .catch(() => {
+      loadingMessage.style.display = "none";
+      errorMessage.textContent = "Failed to send request.";
+      errorMessage.style.display = "block";
+    });
+  });
+</script>
+
 <!-- /Call To Action Section -->
 
   </main>
